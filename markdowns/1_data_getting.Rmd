@@ -1,0 +1,21 @@
+---
+title: "1_data_getting"
+author: "Dave Lovell"
+date: "17/03/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries1, message = FALSE, warning = FALSE}
+library("dplyr")
+library("magrittr")
+```
+
+## Data Getting
+
+Going to lead in the data. Note this is a static source - only gets updated when a human actor moves the fruit of [_surveyProcessing_](https://www.github.com/davelovellCARU/surveyProcessing) into the target dirctory.
+
+```{r lookForData}
