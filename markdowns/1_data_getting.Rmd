@@ -13,6 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library("dplyr")
 library("magrittr")
 library("here")
+library("ggplot2")
+library("forcats")
+library("carutools") #devtools::install_github("davelovellCARU/carutools")
 ```
 
 ## Data Getting
@@ -45,3 +48,40 @@ if(file.exists(oDataFile)) {
 ```{r lookAtNames}
 names(attenders)
 ```
+
+### Number of Responses
+
+How many plants involved?
+
+```{r plantIDLooking}
+attenders %>% pull(plantId) %>% unique %>% length
+
+attenders %>%
+  group_by(plantId) %>% 
+  summarise(totalResponses = n()) %>% 
+  ungroup %>% 
+  mutate(plantId = fct_reorder(plantId, totalResponses)) %T>% {
+    # Make a barplot of this
+    print(ggplot(.,aes(x = plantId, y = totalResponses)) +
+    geom_bar(stat = "identity", fill = carutools::ca_orange()) +
+    xlab("plants") + scale_x_discrete(breaks = NULL))
+    } %T>% {
+      # What's the mean number of responses?
+      print(summarise(., mean(totalResponses)))
+    } %T>% {
+      # What's the median number of responses?
+      attMedian <<- summarise(., median(totalResponses))
+      print(attMedian)
+    } %>% {
+      attMax <<- summarise(., max(totalResponses))
+      print(attMax)
+    } 
+```
+
+So an average of **`r pull(attMedian)`** people have completed from each church. But **`r pull(attMax)`** people from one fresh expression. I'm guessing it's Harbour. Let's check.
+
+Ah can't check lol - don't have the names yet. Let's do that now:
+
+No, wait - best practice would be to do that in the previous project. 
+
+`Add_fxcNames_to_surveyProcessing.exe`
