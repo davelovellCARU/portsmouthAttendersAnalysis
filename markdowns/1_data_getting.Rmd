@@ -28,7 +28,7 @@ Data is searched for in `O:\\` to begin with, as this is mostly likely to be up 
 ### Directory / filename variables -----------------------------------------------
 dataDir <- here::here("data")
 oDataFile <- "O:/WCC/Learning and Development/Research/PROJECT - Portsmouth 2019 onwards/Data/leaders & attenders/attenders2018.rdat"
-localDataFile<- paste0(dataDir, "attenders2018.rdat")
+localDataFile<- paste0(dataDir, "/attenders2018.rdat")
 
 ### Look for the file in those places --------------------------------------------
 if(file.exists(oDataFile)) {
