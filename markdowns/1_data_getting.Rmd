@@ -64,7 +64,8 @@ attenders %>%
     # Make a barplot of this
     print(ggplot(.,aes(x = plantId, y = totalResponses)) +
     geom_bar(stat = "identity", fill = carutools::ca_orange()) +
-    xlab("plants") + scale_x_discrete(breaks = NULL))
+    xlab("plants") + scale_x_discrete(breaks = NULL)) +
+      ggtitle("Number of Responses from each Fresh Expression")
     } %T>% {
       # What's the mean number of responses?
       print(summarise(., mean(totalResponses)))
