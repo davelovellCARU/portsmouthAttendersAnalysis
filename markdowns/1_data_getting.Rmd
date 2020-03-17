@@ -12,10 +12,30 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r libraries1, message = FALSE, warning = FALSE}
 library("dplyr")
 library("magrittr")
+library("here")
 ```
 
 ## Data Getting
 
-Going to lead in the data. Note this is a static source - only gets updated when a human actor moves the fruit of [_surveyProcessing_](https://www.github.com/davelovellCARU/surveyProcessing) into the target dirctory.
+Going to lead in the data. Note this is a static source - only gets updated when a human actor moves the fruit of [**portsmouthSurveyProcessing**](https://www.github.com/davelovellCARU/surveyProcessing) into the target dirctory.
+
+Data is searched for in `O:\\` to begin with, as this is mostly likely to be up to date. If no `O:\\` connection exists, the internal `data` directory is checked. 
 
 ```{r lookForData}
+### Directory / filename variables -----------------------------------------------
+dataDir <- here::here("data")
+oDataFile <- "O:/WCC/Learning and Development/Research/PROJECT - Portsmouth 2019 onwards/Data/leaders & attenders/attenders2018.rdat"
+localDataFile<- paste0(dataDir, "attenders2018.rdat")
+
+### Look for the file in those places --------------------------------------------
+if(file.exists(oDataFile)) {
+  attenders <- readRDS(oDataFile)
+  saveRDS(attenders, localDataFile)
+  
+} else if (file.exists(localDataFile)) {
+  attenders <- readRDS(localDataFile)
+  
+} else stop("attenders2018.rdat not found. Try:
+              - Establishing connection to the O drive OR
+              - placing '2018attenders.rdat' in this repository's `data` directory")
+```
