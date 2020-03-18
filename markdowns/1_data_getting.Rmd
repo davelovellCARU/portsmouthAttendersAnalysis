@@ -17,7 +17,7 @@ library("ggplot2")
 library("forcats")
 library("carutools") #devtools::install_github("davelovellCARU/carutools")
 library("kableExtra")
-ilbrary("patchwork")
+library("patchwork")
 ```
 
 ## Data Getting
