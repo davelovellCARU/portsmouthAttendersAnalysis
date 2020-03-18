@@ -20,7 +20,7 @@ library("carutools") #devtools::install_github("davelovellCARU/carutools")
 
 ## Data Getting
 
-Going to lead in the data. Note this is a static source - only gets updated when a human actor moves the fruit of [**portsmouthSurveyProcessing**](https://www.github.com/davelovellCARU/surveyProcessing) into the target dirctory.
+Going to lead in the data. Note this is a static source - only gets updated when a human actor moves the fruit of [**portsmouthSurveyProcessing**](https://www.github.com/davelovellCARU/portsmouthSurveyProcessing) into the target dirctory.
 
 Data is searched for in `O:\\` to begin with, as this is mostly likely to be up to date. If no `O:\\` connection exists, the internal `data` directory is checked. 
 
