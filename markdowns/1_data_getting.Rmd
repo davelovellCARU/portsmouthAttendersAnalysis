@@ -71,18 +71,21 @@ attenders %>%
       print(summarise(., mean(totalResponses)))
     } %T>% {
       # What's the median number of responses?
-      attMedian <<- summarise(., median(totalResponses))
-      print(attMedian)
+      attMedian <<- pull(summarise(., median(totalResponses)))
+      print(summarise(., median(totalResponses)))
     } %>% {
-      attMax <<- summarise(., max(totalResponses))
-      print(attMax)
+      attMax <<- pull(summarise(., max(totalResponses)))
+      print(summarise(., max(totalResponses)))
     } 
 ```
 
-So an average of **`r pull(attMedian)`** people have completed from each church. But **`r pull(attMax)`** people from one fresh expression. I'm guessing it's Harbour. Let's check.
+So an average of **`r attMedian`** people have completed from each church. But **`r attMax`** people from one fresh expression. I'm guessing it's Harbour. Let's check.
 
 Ah can't check lol - don't have the names yet. Let's do that now:
 
 No, wait - best practice would be to do that in the previous project. 
 
 `Add_fxcNames_to_surveyProcessing.exe`
+
+### Is it Harbour?
+
