@@ -105,4 +105,24 @@ Yes - knew it.
 
 ### Age distribution
 
-Would be good to know how many attenders are under five, as these will be included in some totals but excluded from most analysis
+#### See Under Fives
+
+Would be good to know how many attenders are under five, as these will be included in some totals but excluded from most analysis.
+
+Okay new question: Is it under fives or fives and under? Because other repos will need to change if the prior is true
+
+```{r seeUnderFives}
+attenders %>% 
+  mutate(`Over Five` = !(ageGroup %in% "0-5")) %>% 
+  group_by(plantId, `Over Five`) %>% 
+  summarise(`Total respondents` = n()) %>% 
+  fct_reorder(plantId, `Total respondents`)->
+  underFiveSorted
+
+caruSecondary <- unname(carutools::ca_secondary_cols())
+overFiveBarPlot <- 
+  ggplot(underFiveSorted,
+         aes(x = plantId, y = `Total respondents`, fill = `Over Five`)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = rev(caruSecondary[1:2]))
+```
