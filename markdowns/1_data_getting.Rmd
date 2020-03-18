@@ -16,6 +16,7 @@ library("here")
 library("ggplot2")
 library("forcats")
 library("carutools") #devtools::install_github("davelovellCARU/carutools")
+library("kableExtra")
 ```
 
 ## Data Getting
@@ -53,7 +54,7 @@ names(attenders)
 
 How many plants involved?
 
-```{r plantIDLooking}
+```{r plantIDLooking, results = "asis"}
 attenders %>% pull(plantId) %>% unique %>% length
 
 attenders %>%
@@ -68,14 +69,15 @@ attenders %>%
       ggtitle("Number of Responses from each Fresh Expression")
     } %T>% {
       # What's the mean number of responses?
-      print(summarise(., mean(totalResponses)))
+      attMean <<- pull(summarise(., mean(totalResponses)))
+      print(kable(summarise(., `Mean respondents` = mean(totalResponses))))
     } %T>% {
       # What's the median number of responses?
       attMedian <<- pull(summarise(., median(totalResponses)))
-      print(summarise(., median(totalResponses)))
+      print(kable(summarise(., `Median respondents` = median(totalResponses))))
     } %>% {
       attMax <<- pull(summarise(., max(totalResponses)))
-      print(summarise(., max(totalResponses)))
+      print(kable(summarise(., `Maximum Respondents` = max(totalResponses))))
     } 
 ```
 
@@ -89,3 +91,18 @@ No, wait - best practice would be to do that in the previous project.
 
 ### Is it Harbour?
 
+```{r betYouItsHarbour, results = "asis"}
+attenders %>% 
+  group_by(plantId) %>% 
+  summarise(fxcName = unique(fxcName),
+            respondents = n()) %>% 
+  filter(respondents == max(respondents)) %>% 
+  select(-plantId) %>% 
+  kable
+```
+
+Yes - knew it.
+
+### Age distribution
+
+Would be good to know how many attenders are under five, as these will be included in some totals but excluded from most analysis
