@@ -17,6 +17,7 @@ library("ggplot2")
 library("forcats")
 library("carutools") #devtools::install_github("davelovellCARU/carutools")
 library("kableExtra")
+ilbrary("patchwork")
 ```
 
 ## Data Getting
@@ -112,17 +113,19 @@ Would be good to know how many attenders are under five, as these will be includ
 Okay new question: Is it under fives or fives and under? Because other repos will need to change if the prior is true
 
 ```{r seeUnderFives}
-attenders %>% 
+underFiveSorted <-
+  attenders %>% 
   mutate(`Over Five` = !(ageGroup %in% "0-5")) %>% 
   group_by(plantId, `Over Five`) %>% 
-  summarise(`Total respondents` = n()) %>% 
-  fct_reorder(plantId, `Total respondents`)->
-  underFiveSorted
+  summarise(`Total respondents` = n()) %>%
+  ungroup %>% 
+  mutate(plantId = fct_reorder(plantId, `Total respondents`))
 
-caruSecondary <- unname(carutools::ca_secondary_cols())
+Secondary <- unname(carutools::ca_secondary_cols())
 overFiveBarPlot <- 
   ggplot(underFiveSorted,
          aes(x = plantId, y = `Total respondents`, fill = `Over Five`)) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(values = rev(caruSecondary[1:2]))
+  scale_fill_manual(values = rev(caruSecondary[1:2])) +
+  scale_x_discrete(breaks = NULL) + xlab(NULL)
 ```
