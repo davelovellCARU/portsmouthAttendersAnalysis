@@ -112,7 +112,7 @@ Would be good to know how many attenders are under five, as these will be includ
 
 Okay new question: Is it under fives or fives and under? Because other repos will need to change if the prior is true
 
-```{r seeUnderFives}
+```{r seeUnderFives, fig.width = 7}
 underFiveSorted <-
   attenders %>% 
   mutate(`Over Five` = !(ageGroup %in% "0-5")) %>% 
@@ -127,7 +127,7 @@ overFiveBarPlot <-
   ggplot(underFiveSorted,
          aes(x = plantId, y = `Total respondents`, fill = `Over Five`)) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(values = rev(caruSecondary[1:2])) +
+  scale_fill_manual(values = rev(caruSecondary[c(1,4)])) +
   scale_x_discrete(breaks = NULL) + xlab(NULL)
 
 overFivePieChart <-
@@ -136,7 +136,7 @@ overFivePieChart <-
            summarise(`Total respondents` = sum(`Total respondents`)),
          aes(x = 1, y = `Total respondents`, fill = `Over Five`)) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(values = rev(caruSecondary[1:2])) +
+  scale_fill_manual(values = rev(caruSecondary[c(1,4)])) +
   coord_polar(theta = "y") +
   xlab(NULL) + ylab(NULL) +
   scale_y_continuous(breaks = NULL) + 
