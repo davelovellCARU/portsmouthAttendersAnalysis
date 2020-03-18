@@ -122,10 +122,27 @@ underFiveSorted <-
   mutate(plantId = fct_reorder(plantId, `Total respondents`))
 
 Secondary <- unname(carutools::ca_secondary_cols())
+
 overFiveBarPlot <- 
   ggplot(underFiveSorted,
          aes(x = plantId, y = `Total respondents`, fill = `Over Five`)) +
   geom_bar(stat = "identity") +
   scale_fill_manual(values = rev(caruSecondary[1:2])) +
   scale_x_discrete(breaks = NULL) + xlab(NULL)
+
+overFivePieChart <-
+  ggplot(underFiveSorted %>% 
+           group_by(`Over Five`) %>% 
+           summarise(`Total respondents` = sum(`Total respondents`)),
+         aes(x = 1, y = `Total respondents`, fill = `Over Five`)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = rev(caruSecondary[1:2])) +
+  coord_polar(theta = "y") +
+  xlab(NULL) + ylab(NULL) +
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = NULL) +
+  theme_minimal()
+
+overFiveBarPlot + overFivePieChart
+
 ```
